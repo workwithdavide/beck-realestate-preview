@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "title": "Warm (Referenz Kloster Engelberg)",
+  "description": "Cremefarbener, papierhafter Grund statt kühlem Grau. Markenblau und Typografie bleiben unverändert.",
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "base",        "color": "#FBF9F5", "name": "Base / Warmweiss" },
+        { "slug": "surface",     "color": "#F4F2EC", "name": "Surface / Creme" },
+        { "slug": "surface-alt", "color": "#EAE6DC", "name": "Surface Alt / Sand" },
+        { "slug": "line",        "color": "#DED9CD", "name": "Linie / Hairline" },
+        { "slug": "muted",       "color": "#7C776E", "name": "Muted / Sekundärtext" },
+        { "slug": "ink",         "color": "#1A1A1A", "name": "Ink / Near Black" },
+        { "slug": "accent",      "color": "#2F80AB", "name": "Beck Blau" },
+        { "slug": "accent-deep", "color": "#235F80", "name": "Beck Blau Dunkel" }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var(--wp--preset--color--base)",
+      "text": "var(--wp--preset--color--ink)"
+    }
+  }
+}

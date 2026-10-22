@@ -1,0 +1,1131 @@
+/*
+Theme Name: Beck Real Estate
+Theme URI: https://beck-realestate.ch
+Author: Beck Real Estate
+Description: Massgeschneidertes Block-Theme für BECK Real Estate — diskret, hochwertig, architektonisch. Design-System vollständig über theme.json.
+Version: 0.14.0
+Requires at least: 6.5
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: beck
+Tags: full-site-editing, block-patterns, editorial, one-column, custom-colors, custom-menu
+*/
+
+/* =========================================================================
+   BECK REAL ESTATE — Basis-Stile
+   Tokens leben in theme.json. Hier stehen nur Dinge, die theme.json
+   nicht ausdrücken kann: Motion, Hairlines, Hero-Video, Nav-Details.
+   ========================================================================= */
+
+/* --- 1. Grundlagen ------------------------------------------------------ */
+
+html {
+	scroll-behavior: smooth;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	overflow-x: clip;
+	font-variant-numeric: oldstyle-nums proportional-nums;
+	text-rendering: optimizeLegibility;
+}
+
+::selection {
+	background: var(--wp--preset--color--accent);
+	color: #fff;
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+	outline: 1px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+/* Bilder ruhig halten: kein Zoom-Wackeln, sauberes Seitenverhältnis */
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+/* --- 2. Utility-Klassen (im Editor als "Zusätzliche CSS-Klasse" nutzbar) - */
+
+/* Eyebrow / Label über einer Headline */
+.is-label {
+	font-family: var(--wp--preset--font-family--body);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--tracking--label);
+	color: var(--wp--preset--color--muted);
+	margin-bottom: var(--wp--preset--spacing--20);
+}
+
+/* Lead-Absatz unter einer Headline */
+.is-lead {
+	font-size: var(--wp--preset--font-size--lg);
+	line-height: 1.6;
+	font-weight: 300;
+	color: var(--wp--preset--color--ink);
+	/* ch ist bei dieser Schriftgrösse breit — auf schmalen Viewports
+	   überschiesst 46ch sonst den Bildschirm. */
+	max-width: min(46ch, 100%);
+}
+
+/* Lesbare Zeilenlänge für Fliesstextblöcke, ohne zu zentrieren */
+.is-measure > :where(p, h2, h3, ul, ol) {
+	max-width: 62ch;
+}
+
+/* Feine Trennlinie über einem Block */
+.has-rule-top {
+	border-top: var(--wp--custom--rule--hairline);
+	padding-top: var(--wp--preset--spacing--30);
+}
+
+.has-rule-bottom {
+	border-bottom: var(--wp--custom--rule--hairline);
+	padding-bottom: var(--wp--preset--spacing--30);
+}
+
+/* Textlink mit unterschwelligem Unterstrich, der beim Hover einläuft */
+.is-underline-link a,
+a.is-underline-link {
+	position: relative;
+	display: inline-block;
+	padding-bottom: 2px;
+}
+
+.is-underline-link a::after,
+a.is-underline-link::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	height: 1px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.is-underline-link a:hover::after,
+a.is-underline-link:hover::after {
+	transform: scaleX(1);
+}
+
+/* Pfeil-Link ("Mehr erfahren →") */
+.is-arrow-link a,
+a.is-arrow-link {
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--tracking--label);
+}
+
+.is-arrow-link a::after,
+a.is-arrow-link::after {
+	content: " \2192";
+	display: inline-block;
+	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.is-arrow-link a:hover::after,
+a.is-arrow-link:hover::after {
+	transform: translateX(4px);
+}
+
+/* Liste im Hairline-Stil statt mit Aufzählungspunkten */
+.is-plain-list {
+	list-style: none;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.is-plain-list > li {
+	border-top: var(--wp--custom--rule--hairline);
+	padding-block: var(--wp--preset--spacing--30);
+}
+
+.is-plain-list > li:last-child {
+	border-bottom: var(--wp--custom--rule--hairline);
+}
+
+.is-plain-list > li > strong {
+	display: block;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: var(--wp--preset--font-size--lg);
+	font-weight: 400;
+	line-height: 1.3;
+	margin-bottom: 0.35rem;
+}
+
+.is-plain-list > li br {
+	display: none;
+}
+
+/* Sekundärer Button (Outline) */
+.wp-block-button.is-style-outline > .wp-block-button__link {
+	background: transparent;
+	color: var(--wp--preset--color--ink);
+	border-color: var(--wp--preset--color--line);
+}
+
+.wp-block-button.is-style-outline > .wp-block-button__link:hover {
+	background: var(--wp--preset--color--ink);
+	border-color: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--base);
+}
+
+/* Bild mit ruhigem, langsamem Zoom beim Hover (nur wo bewusst gesetzt) */
+.is-hover-zoom img {
+	transition: transform 1.4s var(--wp--custom--motion--ease--out);
+	will-change: transform;
+}
+
+.is-hover-zoom:hover img {
+	transform: scale(1.035);
+}
+
+/* Nummerierte Editorial-Marke, z. B. "01 —" */
+.is-index::before {
+	content: attr(data-index) " — ";
+	color: var(--wp--preset--color--muted);
+	font-variant-numeric: tabular-nums;
+}
+
+/* --- 3. Header ---------------------------------------------------------- */
+
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: color-mix(in srgb, var(--wp--preset--color--base) 88%, transparent);
+	backdrop-filter: saturate(140%) blur(14px);
+	border-bottom: 1px solid transparent;
+	transition:
+		border-color var(--wp--custom--motion--duration--fast) linear,
+		padding var(--wp--custom--motion--duration--base) var(--wp--custom--motion--ease--out);
+}
+
+.site-header.is-scrolled {
+	border-bottom-color: var(--wp--preset--color--line);
+}
+
+/* Header über dem Hero-Video: hell, transparent */
+.site-header.is-over-hero:not(.is-scrolled) {
+	background: transparent;
+	backdrop-filter: none;
+}
+
+.site-header.is-over-hero:not(.is-scrolled),
+.site-header.is-over-hero:not(.is-scrolled) a {
+	color: var(--wp--preset--color--base);
+}
+
+/* Sobald ein Website-Logo gesetzt ist, wird der Text-Titel überflüssig.
+   Ohne Logo bleibt er als Fallback stehen. */
+.site-header:has(.wp-block-site-logo img) .wp-block-site-title {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.site-header .wp-block-navigation__responsive-container-open,
+.site-header .wp-block-navigation__responsive-container-close {
+	color: currentColor;
+}
+
+/* --- Hauptnavigation ----------------------------------------------------- */
+/*
+ * Nach dem Vorbild von kloster-engelberg.ch: mittig gesetzt, gemischte
+ * Schreibweise, keine Sperrung, keine Aufklapp-Pfeile. Das Untermenü
+ * erscheint beim Hover — ruhig und ohne Ornament.
+ */
+
+/* Drei Spalten: Logo links, Navigation exakt mittig, rechts Ausgleich.
+   max-width/min-width sind nicht kosmetisch: ohne sie wächst die Zeile auf
+   schmalen Viewports über den Container hinaus und schiebt die Menütaste
+   aus dem Bild. */
+.site-header > .wp-block-group {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: center;
+	gap: var(--wp--preset--spacing--40);
+	max-width: 100%;
+	min-width: 0;
+}
+
+.site-header > .wp-block-group > * {
+	min-width: 0;
+}
+
+.site-header > .wp-block-group::after {
+	content: "";
+}
+
+.site-header .wp-block-navigation {
+	justify-content: center;
+	font-size: 1rem;
+	letter-spacing: 0;
+	column-gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.site-header .wp-block-navigation > .wp-block-navigation-item > .wp-block-navigation-item__content {
+	position: relative;
+	padding-block: 0.85rem;
+	white-space: nowrap;
+}
+
+/* Unterstrich läuft von links ein, statt hart zu erscheinen. */
+.site-header .wp-block-navigation > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0.5rem;
+	height: 1px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.site-header .wp-block-navigation > .wp-block-navigation-item:hover > .wp-block-navigation-item__content::after,
+.site-header .wp-block-navigation > .current-menu-item > .wp-block-navigation-item__content::after,
+.site-header .wp-block-navigation > .current-menu-ancestor > .wp-block-navigation-item__content::after {
+	transform: scaleX(1);
+}
+
+/* Wie in der Referenz: kein Chevron am Desktop. Im mobilen Overlay bleibt er,
+   dort ist er die Schaltfläche zum Aufklappen. */
+@media (min-width: 600px) {
+	.site-header .wp-block-navigation__submenu-icon {
+		display: none;
+	}
+}
+
+/* Unter 600px zeigt der Navigationsblock die Menütaste — dort zurück auf
+   Logo links, Taste rechts. */
+@media (max-width: 599px) {
+	.site-header > .wp-block-group {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--wp--preset--spacing--20);
+	}
+
+	.site-header > .wp-block-group::after {
+		display: none;
+	}
+}
+
+/* Untermenüs: ruhige Klappkarte statt Standard-Dropdown -------------------- */
+
+.site-header .wp-block-navigation__submenu-container {
+	min-width: 15rem;
+	padding: var(--wp--preset--spacing--20) 0;
+	background: var(--wp--preset--color--base);
+	border: var(--wp--custom--rule--hairline);
+	border-radius: 0;
+	box-shadow: var(--wp--preset--shadow--subtle);
+	/* Der Header ist halbtransparent — das Menü darf es nicht sein. */
+	color: var(--wp--preset--color--ink);
+	opacity: 0;
+	transform: translateY(-4px);
+	transition:
+		opacity var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out),
+		transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+/* Über dem Hero ist der Header hell — das Untermenü bleibt trotzdem dunkel auf weiss. */
+.site-header .wp-block-navigation__submenu-container a,
+.site-header.is-over-hero:not(.is-scrolled) .wp-block-navigation__submenu-container a {
+	color: var(--wp--preset--color--ink);
+}
+
+.site-header .wp-block-navigation-item:hover > .wp-block-navigation__submenu-container,
+.site-header .wp-block-navigation-item:focus-within > .wp-block-navigation__submenu-container,
+.site-header .wp-block-navigation__submenu-container:hover,
+.site-header .wp-block-navigation__submenu-container[aria-hidden="false"] {
+	opacity: 1;
+	transform: none;
+}
+
+.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item {
+	display: block;
+}
+
+.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	display: block;
+	padding: 0.6rem var(--wp--preset--spacing--30);
+	text-transform: none;
+	letter-spacing: 0;
+	font-size: var(--wp--preset--font-size--sm);
+	white-space: nowrap;
+	transition: background-color var(--wp--custom--motion--duration--fast) linear;
+}
+
+/* Im Untermenü stört der Unterstrich aus der Hauptnavigation. */
+.site-header .wp-block-navigation__submenu-container a::after {
+	display: none;
+}
+
+.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover {
+	background: var(--wp--preset--color--surface);
+	color: var(--wp--preset--color--accent);
+}
+
+.site-header .wp-block-navigation__submenu-icon {
+	margin-left: 0.35rem;
+}
+
+/* Mobiles Overlay: dunkel, aber per CSS statt über Block-Attribute — sonst
+   erbt auch die Untermenü-Karte am Desktop die Overlay-Farben (WordPress
+   setzt Preset-Farbklassen mit !important). */
+.site-header .wp-block-navigation__responsive-container.is-menu-open {
+	background-color: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--base);
+	padding: var(--wp--preset--spacing--50) var(--wp--custom--gutter--page);
+}
+
+.site-header .wp-block-navigation__responsive-container.is-menu-open a {
+	color: var(--wp--preset--color--base);
+}
+
+.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	font-size: var(--wp--preset--font-size--lg);
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+/* Im Overlay klappt das Menü inline auf — dort keine Karte. */
+@media (max-width: 599px) {
+	.site-header .wp-block-navigation__submenu-container {
+		opacity: 1;
+		transform: none;
+		border: 0;
+		box-shadow: none;
+		background: transparent;
+		padding-left: var(--wp--preset--spacing--30);
+	}
+
+	.site-header .wp-block-navigation__submenu-container a,
+	.site-header.is-over-hero:not(.is-scrolled) .wp-block-navigation__submenu-container a {
+		color: var(--wp--preset--color--base);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-header .wp-block-navigation__submenu-container { transition: none; }
+}
+
+/* --- 4. Hero ------------------------------------------------------------ */
+
+.beck-hero {
+	isolation: isolate;
+}
+
+/*
+ * Der Header ist sticky und nimmt damit Platz im Fluss ein. Auf der
+ * Startseite soll er aber ÜBER dem Video liegen — also den Hero um genau
+ * die Headerhöhe nach oben ziehen. Die Höhe misst motion.js und schreibt
+ * sie als --beck-header-h; ohne JS bleibt der Header schlicht darüber
+ * stehen, was ebenfalls funktioniert.
+ */
+body:has(.site-header.is-over-hero) main:has(.beck-hero) {
+	/* Ersetzt zugleich den Block-Gap zwischen Header und main. */
+	margin-top: calc(-1 * var(--beck-header-h, 0px));
+}
+
+/* Verlauf statt flacher Abdunklung: oben lesbar, unten Substanz. */
+.beck-hero > .wp-block-cover__background {
+	background-image: linear-gradient(
+		to bottom,
+		rgba(29, 38, 48, 0.55) 0%,
+		rgba(29, 38, 48, 0.20) 38%,
+		rgba(29, 38, 48, 0.70) 100%
+	);
+}
+
+.beck-hero .wp-block-cover__inner-container {
+	width: 100%;
+}
+
+.beck-hero h1 {
+	max-width: 18ch;
+	text-wrap: balance;
+}
+
+/* Scroll-Hinweis */
+.beck-scroll-cue {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-size: var(--wp--preset--font-size--xs);
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--tracking--label);
+}
+
+.beck-scroll-cue::before {
+	content: "";
+	width: 1px;
+	height: 48px;
+	background: currentColor;
+	opacity: 0.5;
+	transform-origin: top;
+	animation: beck-cue 2.6s var(--wp--custom--motion--ease--inOut) infinite;
+}
+
+@keyframes beck-cue {
+	0%, 100% { transform: scaleY(0.35); opacity: 0.25; }
+	50%      { transform: scaleY(1);    opacity: 0.65; }
+}
+
+/* --- 5. Motion: Reveal beim Scrollen ------------------------------------ */
+/* Ohne JS bleibt alles sichtbar: erst motion.js "spannt" die Elemente (armed). */
+
+.beck-reveal.is-reveal-armed {
+	opacity: 0;
+	transform: translateY(18px);
+	transition:
+		opacity var(--wp--custom--motion--duration--slow) var(--wp--custom--motion--ease--out),
+		transform var(--wp--custom--motion--duration--slow) var(--wp--custom--motion--ease--out);
+	transition-delay: var(--beck-reveal-delay, 0ms);
+}
+
+.beck-reveal.is-revealed {
+	opacity: 1;
+	transform: none;
+}
+
+/* Dezenter Parallax für grosse Bilder */
+.beck-parallax {
+	will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+
+	.beck-reveal.is-reveal-armed {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+
+	.beck-parallax { transform: none !important; }
+
+	.beck-scroll-cue::before { animation: none; }
+
+	.is-hover-zoom img { transition: none; }
+}
+
+/* --- 6. Karten / Säulen ------------------------------------------------- */
+
+.beck-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--20);
+	padding-top: var(--wp--preset--spacing--30);
+	border-top: var(--wp--custom--rule--hairline);
+	transition: border-color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-card:hover {
+	border-top-color: var(--wp--preset--color--accent);
+}
+
+/* Schiebt den Link ans Kartenende, damit alle auf einer Linie sitzen. */
+.beck-card__link {
+	margin-top: auto;
+	padding-top: var(--wp--preset--spacing--20);
+}
+
+/*
+ * Macht die ganze Karte klickbar. Zwingend an einem <a> — liegt die Klasse
+ * auf dem umgebenden <p>, deckt das Overlay zwar die Karte ab, gehört aber
+ * zu keinem Link: Der Klick verpufft und blockiert zugleich den echten Link
+ * darunter. Der Selektor erzwingt das jetzt.
+ */
+a.beck-card__link::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+/*
+ * Der Kartentitel ist der Link. Bewusst ohne Pfeil-Pseudoelement: Bei
+ * umbrechenden Titeln bliebe der Pfeil auf der ersten Zeile hängen. Hairline,
+ * Serifentitel und Hover-Farbe zeigen deutlich genug, dass hier etwas
+ * anklickbar ist.
+ */
+.beck-card:hover a.beck-card__link,
+.beck-pillar:hover a.beck-card__link {
+	color: var(--wp--preset--color--accent);
+}
+
+.beck-card:hover,
+.beck-pillar:hover {
+	border-top-color: var(--wp--preset--color--accent);
+}
+
+/* Beitragsteaser mit Bild: Das Bild oben, darunter Datum, Titel, Anriss. */
+.beck-card--post {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.beck-card--post .wp-block-post-featured-image {
+	margin-bottom: var(--wp--preset--spacing--30);
+	overflow: hidden;
+}
+
+.beck-card--post .wp-block-post-featured-image img {
+	width: 100%;
+	object-fit: cover;
+	transition: transform 1.2s var(--wp--custom--motion--ease--out);
+}
+
+.beck-card--post:hover .wp-block-post-featured-image img {
+	transform: scale(1.035);
+}
+
+/* Rückfallbild etwas zurücknehmen — es steht für "noch kein Bild gesetzt". */
+.beck-featured-fallback img {
+	filter: grayscale(1);
+	opacity: 0.55;
+}
+
+/* Einheitliche Bildhöhe, damit die Karten im Raster auf einer Linie stehen. */
+.beck-card--post .wp-block-post-featured-image img,
+.beck-card--post .beck-featured-fallback img {
+	aspect-ratio: 16 / 9;
+	height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beck-card--post .wp-block-post-featured-image img { transition: none; }
+}
+
+/* --- 6b. FAQ (nativer Details-Block) ------------------------------------ */
+
+.beck-faq {
+	border-top: var(--wp--custom--rule--hairline);
+	padding-block: var(--wp--preset--spacing--30);
+}
+
+.beck-faq:last-of-type {
+	border-bottom: var(--wp--custom--rule--hairline);
+}
+
+.beck-faq > summary {
+	display: flex;
+	align-items: baseline;
+	gap: var(--wp--preset--spacing--30);
+	cursor: pointer;
+	list-style: none;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: var(--wp--preset--font-size--lg);
+	line-height: 1.35;
+	transition: color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-faq > summary::-webkit-details-marker {
+	display: none;
+}
+
+.beck-faq > summary:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+/* Eigenes Plus/Minus statt Browser-Dreieck */
+.beck-faq > summary::after {
+	content: "";
+	flex: 0 0 auto;
+	margin-inline-start: auto;
+	width: 13px;
+	height: 13px;
+	background:
+		linear-gradient(currentColor, currentColor) center/100% 1px no-repeat,
+		linear-gradient(currentColor, currentColor) center/1px 100% no-repeat;
+	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.beck-faq[open] > summary::after {
+	transform: rotate(90deg);
+	background:
+		linear-gradient(currentColor, currentColor) center/100% 1px no-repeat;
+}
+
+.beck-faq > :not(summary) {
+	margin-top: var(--wp--preset--spacing--20);
+	max-width: 62ch;
+	color: var(--wp--preset--color--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beck-faq > summary::after { transition: none; }
+}
+
+/* --- 6c. Säulen-Raster mit sichtbaren Unterseiten ------------------------ */
+
+.beck-pillar {
+	border-top: 1px solid var(--wp--preset--color--ink);
+	padding-top: var(--wp--preset--spacing--30);
+}
+
+.beck-pillar h3 a {
+	display: inline-block;
+}
+
+/* Unterseiten als Hairline-Liste — sofort lesbar, ohne Aufzählungspunkte. */
+.beck-sublist {
+	list-style: none;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.beck-sublist > li {
+	border-top: var(--wp--custom--rule--hairline);
+}
+
+.beck-sublist > li:last-child {
+	border-bottom: var(--wp--custom--rule--hairline);
+}
+
+.beck-sublist > li > a {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--wp--preset--spacing--20);
+	padding-block: 0.7rem;
+	transition: padding-inline-start var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.beck-sublist > li > a::after {
+	content: "\2192";
+	color: var(--wp--preset--color--muted);
+	transition:
+		transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out),
+		color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-sublist > li > a:hover {
+	padding-inline-start: 0.4rem;
+}
+
+.beck-sublist > li > a:hover::after {
+	transform: translateX(3px);
+	color: var(--wp--preset--color--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beck-sublist > li > a,
+	.beck-sublist > li > a::after { transition: none; }
+}
+
+/* --- 6d. Formulare (Fluent Forms) --------------------------------------- */
+/*
+ * Fluent Forms bringt eigene Stile mit — runde Ecken, graue Rahmen, viel
+ * Kontrast. Hier wird das auf die Formensprache des Themes zurückgeführt:
+ * scharfe Kanten, Hairlines, Markenblau nur beim Fokus.
+ */
+
+.beck-formblock .fluentform {
+	max-width: 860px;
+	/* Fehlerrot etwas gedämpfter als die Plugin-Vorgabe. */
+	--fluentform-danger: #b3261e;
+}
+
+.beck-formblock .ff-el-group {
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+/* Abschnittstitel */
+.beck-formblock .ff-el-section-title {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: var(--wp--preset--font-size--xl);
+	font-weight: 400;
+	margin: var(--wp--preset--spacing--50) 0 0;
+}
+
+.beck-formblock .ff-el-section-break {
+	margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.beck-formblock .ff-section_break_desk {
+	color: var(--wp--preset--color--muted);
+	font-size: var(--wp--preset--font-size--sm);
+	margin-top: 0.35rem;
+}
+
+.beck-formblock .ff-el-section-break hr {
+	border: 0;
+	border-top: var(--wp--custom--rule--hairline);
+	margin: var(--wp--preset--spacing--20) 0 0;
+}
+
+/* Beschriftungen */
+.beck-formblock .ff-el-input--label label {
+	font-size: var(--wp--preset--font-size--sm);
+	font-weight: 400;
+	color: var(--wp--preset--color--muted);
+	margin-bottom: 0.4rem;
+}
+
+/* Das Pflichtfeld-Sternchen kommt bei Fluent Forms in Warnrot. In der
+   Markenfarbe wirkt es ruhiger — und Rot bleibt echten Fehlern vorbehalten. */
+.beck-formblock .fluentform .ff-el-input--label.ff-el-is-required.asterisk-right label:after,
+.beck-formblock .fluentform .ff-el-input--label.ff-el-is-required.asterisk-left label:before {
+	color: var(--wp--preset--color--accent);
+}
+
+/* Eingabefelder: flach, scharfkantig, ruhig.
+   Die Selektoren sind bewusst dreiteilig — Fluent Forms setzt seine eigenen
+   Stile über .fluentform .ff-el-form-control und würde sonst gewinnen. */
+.beck-formblock .fluentform .ff-el-form-control,
+.beck-formblock .fluentform select.ff-el-form-control,
+.beck-formblock .fluentform textarea.ff-el-form-control {
+	width: 100%;
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid var(--wp--preset--color--line);
+	border-radius: 0;
+	padding: 0.7rem 0;
+	font-family: inherit;
+	font-size: var(--wp--preset--font-size--md);
+	color: var(--wp--preset--color--ink);
+	box-shadow: none;
+	transition: border-color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-formblock .fluentform .ff-el-form-control:focus {
+	border-bottom-color: var(--wp--preset--color--accent);
+	outline: none;
+	box-shadow: none;
+}
+
+.beck-formblock .fluentform textarea.ff-el-form-control {
+	border: 1px solid var(--wp--preset--color--line);
+	padding: 0.8rem 1rem;
+}
+
+.beck-formblock .fluentform textarea.ff-el-form-control:focus {
+	border-color: var(--wp--preset--color--accent);
+}
+
+/* Auswahlfeld: eigener Pfeil, damit es zu den flachen Feldern passt. */
+.beck-formblock .fluentform select.ff-el-form-control {
+	appearance: none;
+	background-image:
+		linear-gradient(45deg, transparent 50%, var(--wp--preset--color--muted) 50%),
+		linear-gradient(135deg, var(--wp--preset--color--muted) 50%, transparent 50%);
+	background-position: right 0.75rem center, right 0.4rem center;
+	background-size: 5px 5px, 5px 5px;
+	background-repeat: no-repeat;
+	padding-right: 2rem;
+}
+
+/* Mehrspaltige Auswahllisten — bei 21 Kantonen sonst eine endlose Spalte. */
+.beck-formblock .ff_list_3col .ff-el-input--content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 0.15rem var(--wp--preset--spacing--30);
+}
+
+/*
+ * Fluent Forms lässt die Auswahl-Container auf Inhaltsbreite schrumpfen —
+ * dadurch bricht "Appenzell Ausserrhoden" mitten im Namen um. Das Plugin
+ * setzt seine Spaltenlayouts (ff_list_2col/4col/5col/inline) durchgehend mit
+ * !important; ohne dasselbe kommt man hier nicht dagegen an.
+ */
+.beck-formblock .fluentform .ff-el-group.ff_list_3col .ff-el-form-check,
+.beck-formblock .fluentform .ff-el-group.ff_list_3col .ff-el-form-check-label {
+	width: 100% !important;
+	min-width: 0;
+}
+
+/* Raster statt Flexbox: Der Text ist ein anonymes Element und würde als
+   Flex-Item auf Minimalbreite schrumpfen — "Appenzell Ausserrhoden" bräche
+   dann nach dem ersten Wort um. */
+.beck-formblock .ff-el-form-check-label {
+	display: grid;
+	grid-template-columns: 1rem 1fr;
+	align-items: baseline;
+	gap: 0.6rem;
+	font-size: var(--wp--preset--font-size--sm);
+	line-height: 1.5;
+	padding-block: 0.3rem;
+	cursor: pointer;
+}
+
+.beck-formblock input[type="checkbox"],
+.beck-formblock input[type="radio"] {
+	accent-color: var(--wp--preset--color--accent);
+	width: 1rem;
+	height: 1rem;
+	flex: 0 0 auto;
+	transform: translateY(0.15rem);
+}
+
+/* Einwilligung: kein Label darüber, deshalb etwas Luft davor */
+.beck-formblock .ff-el-group:last-of-type .ff-el-form-check-label {
+	align-items: flex-start;
+	max-width: 62ch;
+}
+
+/* Absendeknopf über die Theme-Button-Stile */
+.beck-formblock .ff-btn-submit {
+	background: var(--wp--preset--color--accent);
+	border: 1px solid var(--wp--preset--color--accent);
+	border-radius: 0;
+	color: var(--wp--preset--color--base);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 500;
+	letter-spacing: var(--wp--custom--tracking--label);
+	text-transform: uppercase;
+	padding: 1.05rem 2.25rem;
+	transition: background-color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-formblock .ff-btn-submit:hover {
+	background: var(--wp--preset--color--accent-deep);
+	border-color: var(--wp--preset--color--accent-deep);
+}
+
+/* Fehler- und Erfolgsmeldungen */
+.beck-formblock .ff-el-is-error .text-danger,
+.beck-formblock .error {
+	color: #b3261e;
+	font-size: var(--wp--preset--font-size--sm);
+}
+
+.beck-formblock .ff-message-success {
+	border: 0;
+	border-left: 2px solid var(--wp--preset--color--accent);
+	background: var(--wp--preset--color--surface);
+	padding: var(--wp--preset--spacing--30);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beck-formblock input,
+	.beck-formblock select,
+	.beck-formblock textarea,
+	.beck-formblock .ff-btn-submit { transition: none; }
+}
+
+/* Qualifikationen im Team-Raster — knapp, ohne Aufzählungspunkte. */
+.beck-quals {
+	list-style: none;
+	margin: var(--wp--preset--spacing--20) 0 0;
+	padding: 0;
+	color: var(--wp--preset--color--muted);
+	line-height: 1.7;
+}
+
+/* --- 6e. Orientierung auf Unterseiten ------------------------------------
+ * Brotkrumen mit Zurück-Pfeil oben, Blättern zwischen den Geschwisterseiten
+ * unten. Beides wird in functions.php aus der Seitenhierarchie erzeugt.
+ * ------------------------------------------------------------------------ */
+
+.beck-breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+	max-width: 1320px;
+	margin: 0 auto;
+	padding: var(--wp--preset--spacing--30) var(--wp--custom--gutter--page);
+	border-bottom: var(--wp--custom--rule--hairline);
+	font-size: var(--wp--preset--font-size--sm);
+}
+
+.beck-breadcrumb__back {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.5rem;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.beck-breadcrumb__back::before {
+	content: "\2190";
+	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
+}
+
+.beck-breadcrumb__back:hover::before {
+	transform: translateX(-4px);
+}
+
+.beck-breadcrumb__trail {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	color: var(--wp--preset--color--muted);
+}
+
+.beck-breadcrumb__trail li + li::before {
+	content: "\203A";
+	margin-inline-end: 0.5rem;
+	color: var(--wp--preset--color--line);
+}
+
+.beck-breadcrumb__trail a {
+	color: var(--wp--preset--color--muted);
+}
+
+.beck-breadcrumb__trail a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.beck-breadcrumb__trail [aria-current="page"] {
+	color: var(--wp--preset--color--ink);
+}
+
+/* Auf schmalen Viewports zählt nur der Weg zurück. */
+@media (max-width: 599px) {
+	.beck-breadcrumb__trail {
+		display: none;
+	}
+}
+
+/* --- Blättern zwischen Geschwisterseiten --- */
+
+.beck-siblings {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	gap: var(--wp--preset--spacing--30);
+	max-width: 1320px;
+	margin: var(--wp--preset--spacing--70) auto 0;
+	padding: var(--wp--preset--spacing--40) var(--wp--custom--gutter--page);
+	border-top: var(--wp--custom--rule--hairline);
+}
+
+.beck-sibling {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.beck-sibling--next {
+	text-align: right;
+}
+
+.beck-sibling__label {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+	font-size: var(--wp--preset--font-size--xs);
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--tracking--label);
+	color: var(--wp--preset--color--muted);
+}
+
+.beck-sibling--next .beck-sibling__label {
+	justify-content: flex-end;
+}
+
+.beck-sibling--prev .beck-sibling__label::before { content: "\2190"; }
+.beck-sibling--next .beck-sibling__label::after  { content: "\2192"; }
+
+.beck-sibling__title {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: var(--wp--preset--font-size--lg);
+	line-height: 1.25;
+	transition: color var(--wp--custom--motion--duration--fast) linear;
+}
+
+.beck-sibling:hover .beck-sibling__title {
+	color: var(--wp--preset--color--accent);
+}
+
+.beck-siblings__up {
+	font-size: var(--wp--preset--font-size--xs);
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--tracking--label);
+	color: var(--wp--preset--color--muted);
+	text-align: center;
+	white-space: nowrap;
+}
+
+.beck-siblings__up:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 781px) {
+	.beck-siblings {
+		grid-template-columns: 1fr;
+		gap: var(--wp--preset--spacing--30);
+	}
+
+	.beck-sibling--next,
+	.beck-sibling--next .beck-sibling__label {
+		text-align: left;
+		justify-content: flex-start;
+	}
+
+	.beck-siblings__up {
+		text-align: left;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.beck-breadcrumb__back::before,
+	.beck-sibling__title { transition: none; }
+}
+
+/* --- 7. Footer ---------------------------------------------------------- */
+
+.site-footer {
+	border-top: var(--wp--custom--rule--hairline);
+}
+
+.site-footer .wp-block-navigation {
+	font-size: var(--wp--preset--font-size--sm);
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+/* --- 8. Design-System-Referenzseite ------------------------------------- */
+
+.ds-swatch {
+	aspect-ratio: 3 / 2;
+	border: var(--wp--custom--rule--hairline);
+}
+
+.ds-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+	gap: var(--wp--preset--spacing--30);
+}
+
+.ds-row {
+	display: grid;
+	grid-template-columns: 12ch 1fr;
+	gap: var(--wp--preset--spacing--30);
+	align-items: baseline;
+	padding-block: var(--wp--preset--spacing--20);
+	border-top: var(--wp--custom--rule--hairline);
+}
+
+.ds-row__meta {
+	font-size: var(--wp--preset--font-size--xs);
+	color: var(--wp--preset--color--muted);
+	font-variant-numeric: tabular-nums;
+}
+
+/* BECK Signature: gezielter blauer Section-Akzent */
+.is-label-accent {
+    color: var(--wp--preset--color--accent);
+}
+
