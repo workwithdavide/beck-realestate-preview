@@ -61,14 +61,14 @@
               "fontWeight": "400 600",
               "fontStyle": "normal",
               "fontDisplay": "swap",
-              "src": ["file:./assets/fonts/playfair-display-latin-variable.woff2"]
+              "src": ["file:./assets/fonts/playfair-display-latin-v2.woff2"]
             },
             {
               "fontFamily": "Playfair Display",
               "fontWeight": "400 600",
               "fontStyle": "italic",
               "fontDisplay": "swap",
-              "src": ["file:./assets/fonts/playfair-display-latin-italic-variable.woff2"]
+              "src": ["file:./assets/fonts/playfair-display-latin-italic-v2.woff2"]
             }
           ]
         },
@@ -82,7 +82,7 @@
               "fontWeight": "300 600",
               "fontStyle": "normal",
               "fontDisplay": "swap",
-              "src": ["file:./assets/fonts/inter-latin-variable.woff2"]
+              "src": ["file:./assets/fonts/inter-latin-v2.woff2"]
             }
           ]
         }

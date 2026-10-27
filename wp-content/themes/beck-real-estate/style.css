@@ -241,187 +241,7 @@ a.is-arrow-link:hover::after {
 	color: currentColor;
 }
 
-/* --- Hauptnavigation ----------------------------------------------------- */
-/*
- * Nach dem Vorbild von kloster-engelberg.ch: mittig gesetzt, gemischte
- * Schreibweise, keine Sperrung, keine Aufklapp-Pfeile. Das Untermenü
- * erscheint beim Hover — ruhig und ohne Ornament.
- */
-
-/* Drei Spalten: Logo links, Navigation exakt mittig, rechts Ausgleich.
-   max-width/min-width sind nicht kosmetisch: ohne sie wächst die Zeile auf
-   schmalen Viewports über den Container hinaus und schiebt die Menütaste
-   aus dem Bild. */
-.site-header > .wp-block-group {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-	align-items: center;
-	gap: var(--wp--preset--spacing--40);
-	max-width: 100%;
-	min-width: 0;
-}
-
-.site-header > .wp-block-group > * {
-	min-width: 0;
-}
-
-.site-header > .wp-block-group::after {
-	content: "";
-}
-
-.site-header .wp-block-navigation {
-	justify-content: center;
-	font-size: 1rem;
-	letter-spacing: 0;
-	column-gap: clamp(1.5rem, 3vw, 3rem);
-}
-
-.site-header .wp-block-navigation > .wp-block-navigation-item > .wp-block-navigation-item__content {
-	position: relative;
-	padding-block: 0.85rem;
-	white-space: nowrap;
-}
-
-/* Unterstrich läuft von links ein, statt hart zu erscheinen. */
-.site-header .wp-block-navigation > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
-	content: "";
-	position: absolute;
-	inset-inline: 0;
-	bottom: 0.5rem;
-	height: 1px;
-	background: currentColor;
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
-}
-
-.site-header .wp-block-navigation > .wp-block-navigation-item:hover > .wp-block-navigation-item__content::after,
-.site-header .wp-block-navigation > .current-menu-item > .wp-block-navigation-item__content::after,
-.site-header .wp-block-navigation > .current-menu-ancestor > .wp-block-navigation-item__content::after {
-	transform: scaleX(1);
-}
-
-/* Wie in der Referenz: kein Chevron am Desktop. Im mobilen Overlay bleibt er,
-   dort ist er die Schaltfläche zum Aufklappen. */
-@media (min-width: 600px) {
-	.site-header .wp-block-navigation__submenu-icon {
-		display: none;
-	}
-}
-
-/* Unter 600px zeigt der Navigationsblock die Menütaste — dort zurück auf
-   Logo links, Taste rechts. */
-@media (max-width: 599px) {
-	.site-header > .wp-block-group {
-		display: flex;
-		justify-content: space-between;
-		gap: var(--wp--preset--spacing--20);
-	}
-
-	.site-header > .wp-block-group::after {
-		display: none;
-	}
-}
-
-/* Untermenüs: ruhige Klappkarte statt Standard-Dropdown -------------------- */
-
-.site-header .wp-block-navigation__submenu-container {
-	min-width: 15rem;
-	padding: var(--wp--preset--spacing--20) 0;
-	background: var(--wp--preset--color--base);
-	border: var(--wp--custom--rule--hairline);
-	border-radius: 0;
-	box-shadow: var(--wp--preset--shadow--subtle);
-	/* Der Header ist halbtransparent — das Menü darf es nicht sein. */
-	color: var(--wp--preset--color--ink);
-	opacity: 0;
-	transform: translateY(-4px);
-	transition:
-		opacity var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out),
-		transform var(--wp--custom--motion--duration--fast) var(--wp--custom--motion--ease--out);
-}
-
-/* Über dem Hero ist der Header hell — das Untermenü bleibt trotzdem dunkel auf weiss. */
-.site-header .wp-block-navigation__submenu-container a,
-.site-header.is-over-hero:not(.is-scrolled) .wp-block-navigation__submenu-container a {
-	color: var(--wp--preset--color--ink);
-}
-
-.site-header .wp-block-navigation-item:hover > .wp-block-navigation__submenu-container,
-.site-header .wp-block-navigation-item:focus-within > .wp-block-navigation__submenu-container,
-.site-header .wp-block-navigation__submenu-container:hover,
-.site-header .wp-block-navigation__submenu-container[aria-hidden="false"] {
-	opacity: 1;
-	transform: none;
-}
-
-.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item {
-	display: block;
-}
-
-.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-	display: block;
-	padding: 0.6rem var(--wp--preset--spacing--30);
-	text-transform: none;
-	letter-spacing: 0;
-	font-size: var(--wp--preset--font-size--sm);
-	white-space: nowrap;
-	transition: background-color var(--wp--custom--motion--duration--fast) linear;
-}
-
-/* Im Untermenü stört der Unterstrich aus der Hauptnavigation. */
-.site-header .wp-block-navigation__submenu-container a::after {
-	display: none;
-}
-
-.site-header .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover {
-	background: var(--wp--preset--color--surface);
-	color: var(--wp--preset--color--accent);
-}
-
-.site-header .wp-block-navigation__submenu-icon {
-	margin-left: 0.35rem;
-}
-
-/* Mobiles Overlay: dunkel, aber per CSS statt über Block-Attribute — sonst
-   erbt auch die Untermenü-Karte am Desktop die Overlay-Farben (WordPress
-   setzt Preset-Farbklassen mit !important). */
-.site-header .wp-block-navigation__responsive-container.is-menu-open {
-	background-color: var(--wp--preset--color--ink);
-	color: var(--wp--preset--color--base);
-	padding: var(--wp--preset--spacing--50) var(--wp--custom--gutter--page);
-}
-
-.site-header .wp-block-navigation__responsive-container.is-menu-open a {
-	color: var(--wp--preset--color--base);
-}
-
-.site-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
-	font-size: var(--wp--preset--font-size--lg);
-	text-transform: none;
-	letter-spacing: 0;
-}
-
-/* Im Overlay klappt das Menü inline auf — dort keine Karte. */
-@media (max-width: 599px) {
-	.site-header .wp-block-navigation__submenu-container {
-		opacity: 1;
-		transform: none;
-		border: 0;
-		box-shadow: none;
-		background: transparent;
-		padding-left: var(--wp--preset--spacing--30);
-	}
-
-	.site-header .wp-block-navigation__submenu-container a,
-	.site-header.is-over-hero:not(.is-scrolled) .wp-block-navigation__submenu-container a {
-		color: var(--wp--preset--color--base);
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.site-header .wp-block-navigation__submenu-container { transition: none; }
-}
+/* Responsive navigation: assets/css/navigation.css */
 
 /* --- 4. Hero ------------------------------------------------------------ */
 
@@ -1129,3 +949,22 @@ a.beck-card__link::after {
     color: var(--wp--preset--color--accent);
 }
 
+
+/* Original association logos: quiet footer row, natural proportions. */
+.site-footer .beck-footer-trust {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-evenly;
+    gap: 0; padding-top: 2rem;
+    margin-top: 2rem; border-top: 1px solid var(--wp--preset--color--line);
+}
+.site-footer .beck-footer-trust figure { margin: 0; flex: 0 1 250px; min-width: 0; }
+.site-footer .beck-footer-trust .beck-trust-grs { flex-basis: 190px; }
+.site-footer .beck-footer-trust a { display: block; padding: 0.5rem; background: #fff; border-radius: 3px; }
+.site-footer .beck-footer-trust img { display: block; width: 100%; height: auto; max-width: 100%; object-fit: contain; }
+.site-footer .beck-footer-trust a:focus-visible { outline: 2px solid var(--wp--preset--color--accent); outline-offset: 5px; }
+.beck-person .beck-person-bio { max-width: 65ch; line-height: 1.8; margin-block: 1.5rem; font-size: 1rem; }
+@media (max-width: 600px) {
+    .site-footer .beck-footer-trust { flex-direction: column; gap: 1.75rem; align-items: center; }
+    .site-footer .beck-footer-trust figure { flex: none; width: 240px; max-width: 100%; }
+    .site-footer .beck-footer-trust .beck-trust-grs { flex-basis: auto; width: 185px; }
+    .beck-person .beck-person-bio { line-height: 1.75; }
+}
