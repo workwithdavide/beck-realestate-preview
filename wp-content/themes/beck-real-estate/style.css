@@ -968,3 +968,105 @@ a.beck-card__link::after {
     .site-footer .beck-footer-trust .beck-trust-grs { flex-basis: auto; width: 185px; }
     .beck-person .beck-person-bio { line-height: 1.75; }
 }
+/* Eigentümervertretung: grosszügiger Rhythmus, ausschliesslich Seite 280. */
+.page-id-280 .owner-hero { padding-block: clamp(4rem, 8vw, 8rem) !important; }
+.page-id-280 .owner-hero-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(3rem, 6vw, 6rem); align-items: center; }
+.page-id-280 .owner-hero h1 { font-size: clamp(2.1rem, 3.7vw, 3.5rem); overflow-wrap: normal; }
+.page-id-280 .owner-hero-copy > * + * { margin-top: 1.75rem; }
+.page-id-280 .owner-hero-copy .is-lead { max-width: 32ch; margin-top: 2.5rem; }
+.page-id-280 .owner-image-space { width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 4 / 5; min-height: 340px; background: var(--wp--preset--color--surface); border: 1px solid var(--wp--preset--color--line); display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; box-sizing: border-box; }
+.page-id-280 .owner-image-space p { margin: 0; }
+.page-id-280 .owner-image-space p + p { margin-top: .75rem; font-size: .875rem; max-width: 25ch; color: var(--wp--preset--color--muted); }
+.page-id-280 .owner-section { padding-block: clamp(5rem, 9vw, 9rem) !important; }
+.page-id-280 .owner-intro { padding-top: 1rem !important; }
+.page-id-280 .owner-split { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); column-gap: clamp(3rem, 8vw, 9rem); row-gap: 2.5rem; }
+.page-id-280 .owner-split h2 { max-width: 18ch; }
+.page-id-280 .owner-split p { max-width: 58ch; }
+.page-id-280 .owner-split > div > * + * { margin-top: 1.5rem; }
+.page-id-280 .owner-services-intro { min-width: 0; }
+.page-id-280 .owner-service-list { margin: 0; }
+.page-id-280 .owner-detail { border-top: 1px solid var(--wp--preset--color--line); margin: 0; padding-block: 1.7rem; }
+.page-id-280 .owner-detail:last-child { border-bottom: 1px solid var(--wp--preset--color--line); }
+.page-id-280 .owner-detail summary { display: flex; align-items: baseline; gap: 1.25rem; cursor: pointer; list-style: none; font-family: var(--wp--preset--font-family--display); font-size: clamp(1.2rem, 1.6vw, 1.6rem); line-height: 1.4; }
+.page-id-280 .owner-detail summary::-webkit-details-marker { display: none; }
+.page-id-280 .owner-detail summary::after { content: '+'; margin-left: auto; flex: 0 0 1rem; color: var(--wp--preset--color--accent); font-family: var(--wp--preset--font-family--body); font-weight: 300; }
+.page-id-280 .owner-detail[open] summary::after { content: '−'; }
+.page-id-280 .owner-detail summary:focus-visible { outline: 2px solid var(--wp--preset--color--accent); outline-offset: 8px; }
+.page-id-280 .owner-detail summary .owner-number { font-family: var(--wp--preset--font-family--body); font-size: .75rem; color: var(--wp--preset--color--accent); flex: 0 0 1.5rem; }
+.page-id-280 .owner-detail p { margin: 1.5rem 2.75rem 0; max-width: 54ch; }
+.page-id-280 .owner-audience .is-plain-list li { padding-block: 1.5rem; }
+.page-id-280 .owner-mandates { margin-top: clamp(5rem, 9vw, 9rem); padding-top: clamp(4rem, 7vw, 7rem); border-top: 1px solid var(--wp--preset--color--line); }
+.page-id-280 .owner-mandates .wp-block-columns { gap: clamp(2rem, 5vw, 5rem); margin-top: 3.5rem; }
+.page-id-280 .owner-mandates .beck-card { gap: .75rem; }
+.page-id-280 .owner-mandates .beck-card > * { margin-top: 0; }
+.page-id-280 .owner-personal { max-width: 1000px; margin-inline: auto; }
+.page-id-280 .owner-personal h2 { max-width: 22ch; }
+.page-id-280 .owner-personal > p { max-width: 64ch; }
+.page-id-280 .owner-personal > * + * { margin-top: 2rem; }
+.page-id-280 .owner-personal .is-lead { margin-top: 3rem; max-width: 48ch; font-family: var(--wp--preset--font-family--display); font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: 1.45; }
+@media (max-width: 1100px) {
+ .page-id-280 .owner-hero-grid { grid-template-columns: minmax(0, 1fr); }
+ .page-id-280 .owner-image-space { width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 16 / 7; min-height: 240px; }
+ .page-id-280 .owner-hero h1 { font-size: clamp(2.05rem, 6.5vw, 3.5rem); }
+}
+@media (max-width: 781px) {
+ .page-id-280 .owner-split { grid-template-columns: minmax(0, 1fr); row-gap: 3rem; }
+ .page-id-280 .owner-hero { padding-block: 4rem !important; }
+ .page-id-280 .owner-hero h1 { font-size: clamp(1.65rem, 7.2vw, 3rem); }
+ .page-id-280 .owner-image-space { min-height: 240px; padding: 1.5rem; }
+ .page-id-280 .owner-section { padding-block: 5rem !important; }
+ .page-id-280 .owner-intro { padding-top: 1rem !important; }
+ .page-id-280 .owner-detail summary { gap: .5rem; font-size: 1.2rem; }
+ .page-id-280 .owner-detail p { margin-left: 2rem; margin-right: 0; }
+ .page-id-280 .owner-mandates .wp-block-columns { gap: 2.5rem; }
+}
+
+/* Dienstleistungen: getrennte Kartenlinks und breite, lesbare Leistungstitel. */
+.page-id-6 .wp-block-columns:has(> .beck-pillar) {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: clamp(3rem, 6vw, 6rem);
+}
+.page-id-6 .beck-pillar {
+ position: relative;
+ isolation: isolate;
+ min-width: 0;
+ margin: 0;
+}
+.page-id-6 .beck-pillar h3 a {
+ padding-top: 0;
+ margin-top: 0;
+ overflow-wrap: normal;
+ word-break: normal;
+ hyphens: manual;
+ max-width: 100%;
+}
+.page-id-6 .beck-pillar h3 a::after {
+ content: '';
+ position: absolute;
+ inset: 0;
+ z-index: 1;
+}
+.page-id-6 .beck-pillar:hover h3 a,
+.page-id-6 .beck-pillar h3 a:focus-visible {
+ color: var(--wp--preset--color--accent);
+}
+.page-id-6 .beck-pillar .beck-sublist {
+ position: relative;
+ z-index: 2;
+}
+.page-id-6 .beck-pillar:has(.beck-sublist:hover) h3 a {
+ color: var(--wp--preset--color--ink);
+}
+.page-id-6 .beck-pillar .beck-sublist a:hover,
+.page-id-6 .beck-pillar .beck-sublist a:focus-visible {
+ color: var(--wp--preset--color--accent);
+}
+.page-id-6 .beck-pillar a:focus-visible {
+ outline: 2px solid var(--wp--preset--color--accent);
+ outline-offset: 4px;
+}
+@media (max-width: 781px) {
+ .page-id-6 .wp-block-columns:has(> .beck-pillar) { grid-template-columns: minmax(0, 1fr); }
+ .page-id-6 .beck-pillar h3 { font-size: clamp(1.2rem, 5.5vw, 1.5rem); }
+}
