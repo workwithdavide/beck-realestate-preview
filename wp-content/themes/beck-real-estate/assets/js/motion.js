@@ -23,12 +23,14 @@
 	 */
 
 	function collectRevealTargets() {
-		var targets = Array.prototype.slice.call(document.querySelectorAll('.beck-reveal'));
+		var targets = Array.prototype.slice.call(document.querySelectorAll('.beck-reveal')).filter(function (el) { return !el.matches('.beck-hero .wp-block-buttons, .beck-hero .wp-block-buttons *'); });
 
 		Array.prototype.forEach.call(
 			document.querySelectorAll('.beck-reveal-group'),
 			function (group) {
 				Array.prototype.forEach.call(group.children, function (child, index) {
+                    // Hero actions stay visible from first paint, without reveal animation.
+                    if (child.matches('.beck-hero .wp-block-buttons, .beck-hero .wp-block-buttons *')) return;
 					child.classList.add('beck-reveal');
 					child.style.setProperty('--beck-reveal-delay', index * 110 + 'ms');
 

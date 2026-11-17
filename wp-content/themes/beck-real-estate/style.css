@@ -1070,3 +1070,251 @@ a.beck-card__link::after {
  .page-id-6 .wp-block-columns:has(> .beck-pillar) { grid-template-columns: minmax(0, 1fr); }
  .page-id-6 .beck-pillar h3 { font-size: clamp(1.2rem, 5.5vw, 1.5rem); }
 }
+
+
+/* Startseite: Label links, Titel mittig, Beitragslink rechts. */
+.home .beck-home-insights .beck-insights-heading {
+ display: grid;
+ grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+ align-items: baseline;
+ gap: 1.5rem;
+}
+.home .beck-home-insights .beck-insights-heading > .wp-block-group { display: contents; }
+.home .beck-home-insights .beck-insights-heading h5 {
+ grid-column: 1;
+ grid-row: 1;
+ justify-self: start;
+ margin-inline: 0 !important;
+ text-align: left;
+ margin: 0;
+}
+.home .beck-home-insights .beck-insights-heading h2 {
+ grid-column: 2;
+ grid-row: 1;
+ text-align: center;
+ margin: 0 !important;
+}
+.home .beck-home-insights .beck-insights-heading > .is-arrow-link {
+ grid-column: 3;
+ grid-row: 1;
+ justify-self: end;
+ margin: 0;
+}
+@media (max-width: 1000px) {
+ .home .beck-home-insights .beck-insights-heading { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+ .home .beck-home-insights .beck-insights-heading > .is-arrow-link { grid-column: 2; }
+ .home .beck-home-insights .beck-insights-heading h2 { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+}
+
+/* Gemeinsame Regionenseite und konsistente Vorschau auf der Startseite. */
+.beck-regions-intro { padding-block: clamp(4rem, 8vw, 8rem) 3rem; }
+.beck-regions-intro .is-lead { max-width: 60ch; }
+.beck-regions-main { padding-block: 2rem clamp(5rem, 9vw, 9rem); }
+.beck-regions-home { padding-block: clamp(4.5rem, 8vw, 7rem) clamp(5rem, 10vw, 9rem); }
+.beck-regions-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(2.5rem,5vw,5rem); margin-top: 3rem; }
+.beck-region-card { min-width: 0; scroll-margin-top: 9rem; }
+.beck-region-card > * { margin-inline: 0; }
+.beck-region-card > * + * { margin-top: 1.5rem; }
+.beck-region-card h2, .beck-region-card h3 { margin-top: 1rem; }
+.beck-region-card .is-lead { max-width: 36ch; min-height: 3.4em; }
+.beck-region-card > p:not(.is-label):not(.is-lead):not(.is-arrow-link) { max-width: 57ch; }
+.beck-region-card .is-arrow-link { margin-top: 2rem; }
+.beck-region-photo { width: 100%; aspect-ratio: 16 / 10; min-width: 0; min-height: 230px; box-sizing: border-box; background: var(--wp--preset--color--surface); border: 1px solid var(--wp--preset--color--line); display:flex; flex-direction:column; justify-content:flex-end; gap:.6rem; padding:clamp(1.5rem,3vw,2.5rem); margin-block:2rem; }
+.beck-region-photo > span:last-child { color:var(--wp--preset--color--muted); font-size:.875rem; }
+.beck-region-photo__place { font-family:var(--wp--preset--font-family--display); font-size:clamp(1.8rem,3vw,2.5rem); }
+@media(max-width:781px) {
+ .beck-regions-grid { grid-template-columns:minmax(0,1fr); gap:4rem; }
+ .beck-region-card .is-lead { min-height:0; }
+ .beck-regions-intro { padding-top:4rem; }
+ .beck-region-photo { min-height:210px; }
+}
+.beck-regions-grid > .beck-region-card { margin-block: 0; }
+
+/* Einheitliche sichtbare Weiterlinks, ausschliesslich im Seiteninhalt. */
+main a.beck-forward-link .beck-link-arrow {
+ display: inline-block;
+ margin-inline-start: .4em;
+ font-family: var(--wp--preset--font-family--body);
+ font-size: .78em;
+ font-weight: 400;
+ line-height: 1;
+ letter-spacing: 0;
+ text-indent: 0;
+ white-space: nowrap;
+ transition: transform 220ms ease-out;
+}
+/* Existing stretched-link overlays remain intact; only their old arrow decoration is removed. */
+main :is(.is-arrow-link, .is-underline-link) a.beck-forward-link::after,
+main a.beck-forward-link:is(.is-arrow-link, .is-underline-link)::after,
+main .beck-sublist > li > a.beck-forward-link::after {
+ content: none;
+}
+main a.beck-forward-link:hover,
+main a.beck-forward-link:focus-visible,
+main a.beck-forward-link:active {
+ color: var(--wp--preset--color--accent) !important;
+}
+main a.beck-forward-link:hover .beck-link-arrow,
+main a.beck-forward-link:focus-visible .beck-link-arrow,
+main a.beck-forward-link:active .beck-link-arrow {
+ transform: translateX(4px);
+}
+main :is(.beck-card, .beck-pillar):hover > h3 a.beck-forward-link .beck-link-arrow {
+ transform: translateX(4px);
+}
+main .beck-pillar:has(.beck-sublist:hover) h3 a.beck-forward-link .beck-link-arrow {
+ transform: none;
+}
+main .beck-sublist > li > a.beck-forward-link .beck-link-arrow { flex: 0 0 auto; }
+/* Keep inline arrows with their linked words, without widening small screens. */
+main a.beck-forward-link { overflow-wrap: anywhere; }
+main .beck-pillar h3 a.beck-forward-link { overflow-wrap: normal; }
+@media (prefers-reduced-motion: reduce) {
+ main a.beck-forward-link .beck-link-arrow { transition: none; transform: none !important; }
+}
+
+
+/* Regionale Originalfotos: gleiche Bildflächen, sorgfältiger Ausschnitt. */
+figure.beck-region-photo {
+ position: relative;
+ display: block;
+ min-height: 0;
+ padding: 0;
+ border: 0;
+ overflow: hidden;
+ aspect-ratio: 16 / 10;
+ background: var(--wp--preset--color--surface);
+}
+figure.beck-region-photo img {
+ position: absolute;
+ inset: 0;
+ display: block;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ object-position: 50% 50%;
+}
+figure.beck-region-photo--rigi img { object-position: 50% 62%; }
+@media (prefers-reduced-motion: reduce) {
+ figure.beck-region-photo, figure.beck-region-photo img { transform: none !important; transition: none !important; }
+}
+/* Regionen: die gesamte Bildfläche zoomt, der Ausschnitt bleibt unverändert. */
+figure.beck-region-photo {
+ scale: 1;
+ transition: scale 1.4s var(--wp--custom--motion--ease--out);
+ transform-origin: center;
+}
+figure.beck-region-photo.is-hover-zoom:hover img { transform: none; }
+@media (hover: hover) and (pointer: fine) {
+ figure.beck-region-photo:hover { scale: 1.035; }
+}
+@media (prefers-reduced-motion: reduce) {
+ figure.beck-region-photo { scale: 1 !important; transition: none !important; }
+}
+
+/* Wiederkehrender Kontaktabschluss: Hauptsitz rechts, ruhige Baumfläche links. */
+.beck-contact-photo {
+ position: relative;
+ isolation: isolate;
+ overflow: hidden;
+ background-color: #182129 !important;
+}
+.beck-contact-photo::before {
+ content: '';
+ position: absolute;
+ inset: 0;
+ z-index: -2;
+ background-image: var(--beck-contact-building);
+ background-repeat: no-repeat;
+ background-size: 120% auto;
+ background-position: left 58%;
+}
+.beck-contact-photo::after {
+ content: '';
+ position: absolute;
+ inset: 0;
+ z-index: -1;
+ background: linear-gradient(90deg,rgba(14,23,30,.92) 0%,rgba(14,23,30,.84) 34%,rgba(14,23,30,.55) 60%,rgba(14,23,30,.25) 100%);
+}
+.beck-contact-photo h5 { color: var(--wp--preset--color--accent) !important; }
+.beck-contact-photo .is-underline-link { color: #e0e6eb !important; }
+.beck-contact-photo .wp-block-columns { position:relative; }
+@media (max-width: 781px) {
+ .beck-contact-photo::before { background-size: auto 100%; background-position: 58% center; }
+ .beck-contact-photo::after { background:linear-gradient(180deg,rgba(14,23,30,.87) 0%,rgba(14,23,30,.76) 50%,rgba(14,23,30,.52) 100%); }
+}
+.beck-contact-photo { --beck-contact-building: url('/beck-realestate-preview/wp-content/uploads/2026/11/beck-hauptsitz-sursee.jpg'); }
+
+
+/* Neubau, Umbau und Sanierung: Text links, Originalfoto rechts. */
+.beck-service-hero-grid {
+ display: grid;
+ grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+ gap: clamp(3rem, 6vw, 6rem);
+ align-items: center;
+}
+.beck-service-hero-grid > * { margin-block: 0; min-width: 0; }
+.beck-service-hero-copy .is-lead { max-width: 32ch; }
+figure.beck-editorial-photo {
+ display: block;
+ width: 100%;
+ position: relative;
+ aspect-ratio: 3 / 2;
+ overflow: hidden;
+ scale: 1;
+ transform-origin: center;
+ transition: scale 1.4s var(--wp--custom--motion--ease--out);
+}
+figure.beck-editorial-photo img { display:block; position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+figure.beck-editorial-photo--sanierung img { object-position:50% 42%; }
+@media (hover:hover) and (pointer:fine) {
+ figure.beck-editorial-photo:hover { scale:1.035; }
+}
+@media (max-width:781px) {
+ .beck-service-hero-grid { grid-template-columns:minmax(0,1fr); gap:2.5rem; }
+ figure.beck-editorial-photo { aspect-ratio:4 / 3; }
+}
+@media(prefers-reduced-motion:reduce) {
+ figure.beck-editorial-photo { scale:1 !important; transform:none !important; transition:none !important; }
+}
+
+/* Erklärung und Untertitel bilden mit dem grösseren Foto einen Einstieg. */
+.beck-service-hero-grid {
+ grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+ align-items: center;
+}
+.beck-service-hero-intro { margin-top: 2.5rem; max-width: 52ch; }
+.beck-service-hero-intro p { margin: 0; }
+.beck-service-hero-grid figure.beck-editorial-photo { aspect-ratio: 6 / 5; }
+@media (max-width:781px) {
+ .beck-service-hero-grid { grid-template-columns: minmax(0,1fr); }
+ .beck-service-hero-intro { margin-top: 2rem; }
+ .beck-service-hero-grid figure.beck-editorial-photo { aspect-ratio: 4 / 3; }
+}
+
+/* Zwei weitere Leistungseinstiege mit Originalbildern. */
+.page-id-280 .owner-photo-hero { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); align-items:center; }
+.page-id-280 .owner-photo-hero h1 { font-size:clamp(2rem,3.4vw,3.2rem); }
+.page-id-280 .owner-perspective-intro { margin-top:2.5rem; }
+.page-id-280 .owner-perspective-intro > .is-label { margin-top:0; }
+.page-id-280 .owner-perspective-intro h2 { font-size:var(--wp--preset--font-size--xl); margin-top:1rem; }
+.page-id-280 .owner-perspective-intro p { margin-top:1.25rem; }
+.page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:3 / 4; }
+.beck-architecture-main-hero figure.beck-editorial-photo { aspect-ratio:3 / 2; }
+.beck-editorial-photo--architektur-entwicklung img { object-position:52% 50%; filter:saturate(.72); }
+@media(max-width:1100px) {
+ .page-id-280 .owner-photo-hero { grid-template-columns:minmax(0,1fr); }
+ .page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:4 / 3; }
+}
+@media(max-width:781px) {
+ .page-id-280 .owner-photo-hero h1 { font-size:clamp(1.65rem,7.2vw,3rem); }
+ .beck-architecture-main-hero figure.beck-editorial-photo { aspect-ratio:3 / 2; }
+}
+/* Vollständige Gebäudegruppe und mobiler Bildfokus. */
+.beck-architecture-main-hero figure.beck-editorial-photo { aspect-ratio:16 / 9; }
+@media(max-width:1100px) { .beck-editorial-photo--eigentuemervertretung img { object-position:50% 65%; } }
+
+/* Kompakter Eigentümer-Einstieg mit eigenständiger Perspektive. */
+.page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:3 / 2; }
+.page-id-280 .beck-editorial-photo--eigentuemervertretung img { object-position:50% 65%; }
+@media(max-width:781px) { .page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:4 / 3; } }
