@@ -1318,3 +1318,14 @@ figure.beck-editorial-photo--sanierung img { object-position:50% 42%; }
 .page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:3 / 2; }
 .page-id-280 .beck-editorial-photo--eigentuemervertretung img { object-position:50% 65%; }
 @media(max-width:781px) { .page-id-280 .owner-photo-hero figure.beck-editorial-photo { aspect-ratio:4 / 3; } }
+
+/* Gemeinsame Mittelachse im Startseiten-Hero. */
+.home .beck-hero h1,
+.home .beck-hero .is-lead {
+	margin-inline: auto;
+	text-align: center;
+}
+
+.home .beck-hero .wp-block-buttons {
+	justify-content: center;
+}
