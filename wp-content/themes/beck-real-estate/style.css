@@ -179,14 +179,25 @@ a.is-arrow-link:hover::after {
 	color: var(--wp--preset--color--base);
 }
 
-/* Bild mit ruhigem, langsamem Zoom beim Hover (nur wo bewusst gesetzt) */
-.is-hover-zoom img {
-	transition: transform 1.4s var(--wp--custom--motion--ease--out);
-	will-change: transform;
+/* Redaktionelle Bilder: Die gesamte Bildfläche zoomt bei Maus-Hover. */
+figure.is-hover-zoom,
+figure.wp-block-post-featured-image:not(.beck-featured-fallback) {
+	transition: scale 1.4s var(--wp--custom--motion--ease--out);
+	transform-origin: center;
 }
 
-.is-hover-zoom:hover img {
-	transform: scale(1.035);
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+	figure.is-hover-zoom:hover,
+	figure.wp-block-post-featured-image:not(.beck-featured-fallback):hover {
+		scale: 1.035;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	figure.is-hover-zoom,
+	figure.wp-block-post-featured-image:not(.beck-featured-fallback) {
+		transition: none;
+	}
 }
 
 /* Nummerierte Editorial-Marke, z. B. "01 —" */
@@ -339,8 +350,6 @@ body:has(.site-header.is-over-hero) main:has(.beck-hero) {
 	.beck-parallax { transform: none !important; }
 
 	.beck-scroll-cue::before { animation: none; }
-
-	.is-hover-zoom img { transition: none; }
 }
 
 /* --- 6. Karten / Säulen ------------------------------------------------- */
@@ -407,11 +416,7 @@ a.beck-card__link::after {
 .beck-card--post .wp-block-post-featured-image img {
 	width: 100%;
 	object-fit: cover;
-	transition: transform 1.2s var(--wp--custom--motion--ease--out);
-}
 
-.beck-card--post:hover .wp-block-post-featured-image img {
-	transform: scale(1.035);
 }
 
 /* Rückfallbild etwas zurücknehmen — es steht für "noch kein Bild gesetzt". */
@@ -425,10 +430,6 @@ a.beck-card__link::after {
 .beck-card--post .beck-featured-fallback img {
 	aspect-ratio: 16 / 9;
 	height: auto;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.beck-card--post .wp-block-post-featured-image img { transition: none; }
 }
 
 /* --- 6b. FAQ (nativer Details-Block) ------------------------------------ */
@@ -1130,6 +1131,17 @@ a.beck-card__link::after {
 }
 .beck-regions-grid > .beck-region-card { margin-block: 0; }
 
+@media (min-width: 782px) {
+ .beck-regions-main .beck-regions-grid > .beck-region-card {
+  display: flex;
+  flex-direction: column;
+ }
+ .beck-regions-main .beck-region-card > .is-arrow-link:last-child {
+  margin-top: auto;
+  padding-top: 2rem;
+ }
+}
+
 /* Einheitliche sichtbare Weiterlinks, ausschliesslich im Seiteninhalt. */
 main a.beck-forward-link .beck-link-arrow {
  display: inline-block;
@@ -1198,20 +1210,6 @@ figure.beck-region-photo--rigi img { object-position: 50% 62%; }
 @media (prefers-reduced-motion: reduce) {
  figure.beck-region-photo, figure.beck-region-photo img { transform: none !important; transition: none !important; }
 }
-/* Regionen: die gesamte Bildfläche zoomt, der Ausschnitt bleibt unverändert. */
-figure.beck-region-photo {
- scale: 1;
- transition: scale 1.4s var(--wp--custom--motion--ease--out);
- transform-origin: center;
-}
-figure.beck-region-photo.is-hover-zoom:hover img { transform: none; }
-@media (hover: hover) and (pointer: fine) {
- figure.beck-region-photo:hover { scale: 1.035; }
-}
-@media (prefers-reduced-motion: reduce) {
- figure.beck-region-photo { scale: 1 !important; transition: none !important; }
-}
-
 /* Wiederkehrender Kontaktabschluss: Hauptsitz rechts, ruhige Baumfläche links. */
 .beck-contact-photo {
  position: relative;
@@ -1328,4 +1326,57 @@ figure.beck-editorial-photo--sanierung img { object-position:50% 42%; }
 
 .home .beck-hero .wp-block-buttons {
 	justify-content: center;
+}
+
+/* Standbild bis zur Lieferung des Startseitenvideos. */
+.home .beck-hero {
+	background: #1d2630 url("/beck-realestate-preview/wp-content/themes/beck-real-estate/assets/img/hero-provisorium.jpg") 58% center / cover no-repeat;
+}
+
+.home .beck-hero > video {
+	display: none;
+}
+
+.home .beck-hero > .wp-block-cover__background {
+	background: linear-gradient(180deg, rgba(16, 25, 34, .56), rgba(16, 25, 34, .15) 32%, rgba(16, 25, 34, .76));
+	opacity: 1;
+}
+
+
+/* Kontaktverlauf an der oberen Kante des provisorischen Hero-Fotos. */
+.home .beck-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0 0 auto;
+	height: clamp(120px, 21vh, 180px);
+	background: linear-gradient(180deg, rgba(14,23,30,.92) 0%, rgba(14,23,30,.84) 34%, rgba(14,23,30,.55) 60%, rgba(14,23,30,.25) 100%);
+	mask-image: linear-gradient(#000 65%, transparent);
+	pointer-events: none;
+	z-index: 1;
+}
+
+@media (max-width: 781px) {
+	.home .beck-hero::before {
+		background: linear-gradient(180deg, rgba(14,23,30,.87) 0%, rgba(14,23,30,.76) 50%, rgba(14,23,30,.52) 100%);
+	}
+}
+
+/* Porträt im Stiftungsrat-Beitrag und in seinen Beitragsvorschauen. */
+.wp-block-post-featured-image img[src*="/felix-beck-neu-im-stiftungsrat-der-terra-helvetica-anlagestiftung"] {
+	object-position: 50% 13%;
+}
+
+/* Eine gemeinsame Mittelachse innerhalb des bildschirmbreiten Startseiten-Heros. */
+.home .beck-hero.wp-block-cover.has-custom-content-position.is-position-bottom-left {
+	justify-content: center;
+}
+
+@media (max-width: 360px) {
+	.page-id-280 .owner-photo-hero h1 {
+		font-size: clamp(1.35rem, 7.4vw, 1.65rem);
+		overflow-wrap: anywhere;
+	}
+
+	.beck-siblings { grid-template-columns: minmax(0, 1fr); }
+	.beck-siblings__up { white-space: normal; }
 }
